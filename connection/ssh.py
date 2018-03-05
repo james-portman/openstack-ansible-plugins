@@ -186,3 +186,11 @@ class Connection(SSH.Connection):
             cmd = map(SSH.to_bytes, cmd)
             p = SSH.subprocess.Popen(cmd, stdin=SSH.subprocess.PIPE, stdout=SSH.subprocess.PIPE, stderr=SSH.subprocess.PIPE)
             p.communicate()
+
+    def transport_test(self, connect_timeout):
+        """
+        Disable the inherited transport_test method from Ansible 2.3 ssh connection
+        plugin. In 2.3 this attempts to make a direct socket connection which
+        breaks use cases where an SSH bastion is being used for connections.
+        """
+        return
